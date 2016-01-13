@@ -13,7 +13,13 @@ Gem::Specification.new do |s|
   s.email         = 'dev@lomography.com'
 
   s.files         = `git ls-files`.split($/)
+  s.test_files    = `git ls-files -- {test}/*`.split("\n")
   s.require_paths = ["lib"]
 
   s.add_dependency 'httparty'
+
+  s.add_development_dependency 'byebug'
+  s.add_development_dependency 'minitest'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'webmock'
 end
