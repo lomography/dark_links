@@ -11,6 +11,9 @@ Gem::Specification.new do |s|
   s.description   = "Provides concerns to find broken urls in blobs of markup and markdown."
   s.authors       = ["Michael Emhofer", "Martin Sereinig", "Markus Wegscheider"]
   s.email         = 'dev@lomography.com'
+
   s.files         = `git ls-files`.split($/)
   s.require_paths = ["lib"]
+
+  s.add_dependency 'httparty'
 end
