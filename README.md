@@ -1,5 +1,3 @@
-Provides concerns to find broken urls in blobs of markup and markdown.
-
 # dark_links
 
 Dark_links provides a module to find broken urls in blobs of html and markdown markup.
@@ -18,10 +16,6 @@ You will reccive a hash containing all the found links as keys and ```true``` (w
 ```ruby
 { "http://www.zelda.com/" => true }
 ```
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/lomography/dark_links. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
