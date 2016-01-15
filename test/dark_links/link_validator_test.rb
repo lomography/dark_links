@@ -27,6 +27,13 @@ module DarkLinks
       assert_equal false, links["http://www.lomography.com/brzlbrzl"]
       assert_equal true,  links["http://www.lomography.com/"]
     end
+
+    def test_links_with_errors
+      stub_request(:head, "http://www.lomography.com/server_error").to_return(status: 500)
+
+      links = Text.new.check_links("server error: http://www.lomography.com/server_error")
+      assert_equal false, links["http://www.lomography.com/server_error"]
+    end
   end
 
   class Text

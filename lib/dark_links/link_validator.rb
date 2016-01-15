@@ -19,10 +19,16 @@ module DarkLinks
     def check_link( url )
       begin
         response = HTTParty.head(url)
-        if response.code == 404
-          "Page could not be found"
-        else
+        if response.code < 400
           "OK"
+        elsif response.code == 404
+          "Page could not be found"
+        elsif response.code >= 400 && response.code < 500
+          "Client Error"
+        elsif response.code >= 500 && response.code < 600
+          "Server Error"
+        else
+          "Unknowen Error"
         end
       rescue Timeout::Error, SocketError => e
         "Can't find server"
