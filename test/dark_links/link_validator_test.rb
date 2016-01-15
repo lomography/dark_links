@@ -28,11 +28,17 @@ module DarkLinks
       assert_equal true,  links["http://www.lomography.com/"]
     end
 
-    def test_links_with_errors
+    def test_link_with_internal_server_error
       stub_request(:head, "http://www.lomography.com/server_error").to_return(status: 500)
 
       links = Text.new.check_links("server error: http://www.lomography.com/server_error")
       assert_equal false, links["http://www.lomography.com/server_error"]
+    end
+
+    def test_escaped_link
+      stub_request(:head, "http://www.nasa.gov/hello?id=42&key=23").to_return(status: 200)
+      links = Text.new.check_links("Here is something that you might find in html: <a href=\"http://www.nasa.gov/hello?id=42&amp;key=23\">nasa</a>")
+      assert_equal true, links["http://www.nasa.gov/hello?id=42&key=23"]
     end
   end
 

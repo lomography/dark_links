@@ -1,4 +1,6 @@
 require 'httparty'
+require 'uri'
+require 'cgi'
 
 module DarkLinks
   module LinkValidator
@@ -18,7 +20,8 @@ module DarkLinks
 
     def check_link( url )
       begin
-        response = HTTParty.head(url)
+        response = HTTParty.head(unescape_url(url))
+
         if response.code < 400
           "OK"
         elsif response.code == 404
@@ -51,11 +54,16 @@ module DarkLinks
           end
 
           sha = Digest::SHA1.hexdigest(url)
-          tokens = tokens.merge( sha => url )
+          tokens = tokens.merge( sha => unescape_url(url) )
 
           "[[link:#{sha}]]#{append}"
         end
         { body: result, link_tokens: tokens }
+      end
+
+      def unescape_url( url )
+        url = CGI.unescapeHTML( url )
+        URI.unescape(url)
       end
   end
 end
