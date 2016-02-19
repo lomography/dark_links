@@ -22,6 +22,11 @@ module DarkLinks
       begin
         response = HTTParty.head(unescape_url(url))
 
+        if response.code >= 400
+          # maybe the server is just not allowing head requests (like instagram.com).
+          response = HTTParty.get(unescape_url(url))
+        end
+
         if response.code < 400
           "OK"
         elsif response.code == 404
