@@ -41,6 +41,12 @@ module DarkLinks
       assert_equal true, links["http://www.nasa.gov/hello?id=42&key=23"]
     end
 
+    def test_https_link
+      stub_request(:any, "https://www.nasa.gov/").to_return(status: 200)
+      links = Text.new.check_links("Here is something that you might find in html: <a href=\"https://www.nasa.gov/\">nasa</a>")
+      assert_equal true, links["https://www.nasa.gov/"]
+    end
+
     def test_server_that_only_allows_get
       stub_request(:head, "http://www.lomography.com/").to_return(status: 405)
       stub_request(:get, "http://www.lomography.com/").to_return(status: 200)
