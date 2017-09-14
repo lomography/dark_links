@@ -47,7 +47,7 @@ module DarkLinks
 
     private
       def tokenize_links( text )
-        regex = %r{(http|https)://[^\"\s<]+}
+        regex = %r{(http|https)://[^'\"[[:space:]]<]+}
         tokens = {}
 
         result = text.gsub( regex ) do |link|

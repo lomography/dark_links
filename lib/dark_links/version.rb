@@ -1,3 +1,3 @@
 module DarkLinks
-  VERSION = "0.1.0"
+  VeERSION = "0.2.0"
 end
