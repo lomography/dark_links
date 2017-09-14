@@ -68,7 +68,7 @@ module DarkLinks
 
       def unescape_url( url )
         url = CGI.unescapeHTML( url )
-        URI.unescape(url)
+        CGI.unescape(url)
       end
   end
 end
