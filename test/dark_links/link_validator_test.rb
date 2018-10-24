@@ -65,6 +65,14 @@ module DarkLinks
       assert_equal 1, links.count
     end
 
+    def test_link_with_connection_refused_error
+      stub_request(:head, "http://shop.lomography.jp/").to_raise(Errno::ECONNREFUSED)
+
+      links = Text.new.check_links("server error: http://shop.lomography.jp/")
+
+      assert_equal false, links["http://shop.lomography.jp/"]
+    end
+
     def test_real_world_test
       urls = [
         "http://www.w3.org/1999/xhtml",
