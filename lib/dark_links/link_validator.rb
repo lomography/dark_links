@@ -42,6 +42,8 @@ module DarkLinks
         "Can't find server"
       rescue URI::InvalidURIError => e
         "Is not a valid url"
+      rescue Errno::ECONNREFUSED => e
+        "The server is down."
       end
     end
 
