@@ -73,6 +73,14 @@ module DarkLinks
       assert_equal false, links["http://shop.lomography.jp/"]
     end
 
+    def test_link_ending_with_hyphen
+      stub_request(:head, "http://www.lomography.com/homes/-a-l-b-e-r-t-o-").to_return(status: 200)
+
+      links = Text.new.check_links("Link: http://www.lomography.com/homes/-a-l-b-e-r-t-o-")
+
+      assert_equal true, links["http://www.lomography.com/homes/-a-l-b-e-r-t-o-"]
+    end
+
     def test_real_world_test
       urls = [
         "http://www.w3.org/1999/xhtml",
