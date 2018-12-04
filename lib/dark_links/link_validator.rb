@@ -55,7 +55,7 @@ module DarkLinks
         result = text.gsub( regex ) do |link|
           append = ''
 
-          url = link.gsub(/[^\w\/-=&]\z/) do |char|
+          url = link.gsub(/[^\w\/-=&-]\z/) do |char|
             append = char
             ''
           end
