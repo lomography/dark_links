@@ -44,6 +44,10 @@ module DarkLinks
         "Is not a valid url"
       rescue Errno::ECONNREFUSED => e
         "The server is down."
+      rescue OpenSSL::SSL::SSLError => e
+        "Certificate verify failed"
+      rescue Exception => e
+        "#{e.inspect}"
       end
     end
 
