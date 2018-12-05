@@ -81,6 +81,22 @@ module DarkLinks
       assert_equal true, links["http://www.lomography.com/homes/-a-l-b-e-r-t-o-"]
     end
 
+    def test_ssl_error
+      stub_request(:head, "https://www.instagram.cn/ekrogh/").to_raise(OpenSSL::SSL::SSLError)
+
+      links = Text.new.check_links("Link: https://www.instagram.cn/ekrogh/")
+
+      assert_equal false, links["https://www.instagram.cn/ekrogh/"]
+    end
+
+    def test_not_handled_exception
+      stub_request(:head, "https://www.instagram.cn/ekrogh/").to_raise(Exception)
+
+      links = Text.new.check_links("Link: https://www.instagram.cn/ekrogh/")
+
+      assert_equal false, links["https://www.instagram.cn/ekrogh/"]
+    end
+
     def test_real_world_test
       urls = [
         "http://www.w3.org/1999/xhtml",
