@@ -97,6 +97,26 @@ module DarkLinks
       assert_equal false, links["https://www.instagram.cn/ekrogh/"]
     end
 
+    def test_using_different_user_agent
+      stub_request(:head, "https://twitter.com/lomography").to_return(status: 400)
+      stub_request(:get, "https://twitter.com/lomography").with(headers: {
+        "User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
+      }).to_return(status: 200)
+
+      links = Text.new.check_links("https://twitter.com/lomography")
+
+      assert_equal true, links["https://twitter.com/lomography"]
+    end
+
+    def test_links_not_allowing_head_requests
+      stub_request(:head, "https://instagram.com/lomography").to_return(status: 400)
+      stub_request(:get, "https://instagram.com/lomography").to_return(status: 200)
+
+      links = Text.new.check_links("https://instagram.com/lomography")
+
+      assert_equal true, links["https://instagram.com/lomography"]
+    end
+
     def test_real_world_test
       urls = [
         "http://www.w3.org/1999/xhtml",
