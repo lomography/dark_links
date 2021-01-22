@@ -23,8 +23,15 @@ module DarkLinks
         response = HTTParty.head(unescape_url(url))
 
         if response.code >= 400
-          # maybe the server is just not allowing head requests (like instagram.com).
-          response = HTTParty.get(unescape_url(url))
+          # maybe the server is just not allowing head requests (like instagram.com) or it requires a supported browser's user-agent (like twitter.com)
+          response = HTTParty.get(
+            unescape_url(url),
+            {
+              headers: {
+                "User-Agent" => chrome_user_agent
+              }
+            }
+          )
         end
 
         if response.code < 400
@@ -75,6 +82,10 @@ module DarkLinks
       def unescape_url( url )
         url = CGI.unescapeHTML( url )
         CGI.unescape(url)
+      end
+
+      def chrome_user_agent
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
       end
   end
 end
