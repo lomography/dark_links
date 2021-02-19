@@ -1,0 +1,6 @@
+- name: ci
+  type: parallel
+  steps:
+  - name: tests
+    service: dark-links
+    command: bundle exec rake
