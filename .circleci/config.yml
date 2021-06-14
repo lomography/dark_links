@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: lomography/dark-links:1.0
+        environment:
+          RAILS_ENV: test
+          RUBY_VERSION: 2.7.3
+          BUNDLER_VERSION: 2.1.4
+    resource_class: small
+    steps:
+      - checkout
+      - run:
+          name: Run rake tests
+          command: bundle exec rake
