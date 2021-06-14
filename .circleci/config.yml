@@ -12,5 +12,5 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Run rails tests
+          name: Run rake tests
           command: bundle exec rake
